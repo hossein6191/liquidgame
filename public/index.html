@@ -32,27 +32,25 @@ canvas{display:block;position:fixed;top:0;left:0;z-index:1}
 .bubble:active{transform:scale(.88)}
 .bubble.wobble{animation:wobble .35s ease}
 .bubble-count{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:800;color:rgba(92,225,230,.15);height:34px}
-.bubble-burst{position:fixed;top:50%;left:50%;font-size:clamp(38px,8vw,64px);font-weight:900;letter-spacing:5px;background:linear-gradient(135deg,#5ce1e6,#38b6ff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:burstIn .5s ease;display:none;z-index:200;pointer-events:none}
+.bubble-burst{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(18px,5vw,28px);font-weight:900;letter-spacing:4px;background:linear-gradient(135deg,#5ce1e6,#38b6ff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:none;z-index:200;pointer-events:none}
 .burst-particles{position:fixed;inset:0;pointer-events:none;z-index:190}
 
-/* FLOATING LOGOS - in flow, not absolute */
-@keyframes slideFromTop{0%{transform:translateY(-120px) rotate(-5deg);opacity:0}100%{transform:translateY(0) rotate(0);opacity:1}}
-@keyframes slideFromBot{0%{transform:translateY(120px) rotate(5deg);opacity:0}100%{transform:translateY(0) rotate(0);opacity:1}}
-@keyframes logoHover{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+/* FLYING DROP ICONS — small, from top/bottom */
+@keyframes iconDown{0%{transform:translateY(-80px);opacity:0}100%{transform:translateY(0);opacity:1}}
+@keyframes iconUp{0%{transform:translateY(80px);opacity:0}100%{transform:translateY(0);opacity:1}}
+@keyframes iconBob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
-.fly-logo-wrap{width:clamp(200px,60vw,360px);margin:12px auto;cursor:pointer;text-align:center;position:relative;transition:transform .4s,opacity .4s}
-.fly-logo-wrap:hover{transform:scale(1.05)}
-.fly-logo-wrap:active{transform:scale(.9)}
-.fly-from-top{opacity:0;transform:translateY(-120px) rotate(-5deg)}
-.fly-from-top.animate{animation:slideFromTop 2s cubic-bezier(.23,1,.32,1) both,logoHover 4s ease-in-out 2.5s infinite}
-.fly-from-bot{opacity:0;transform:translateY(120px) rotate(5deg)}
-.fly-from-bot.animate{animation:slideFromBot 2s cubic-bezier(.23,1,.32,1) both,logoHover 4s ease-in-out 3s infinite}
-.fly-logo-img{width:100%;filter:drop-shadow(0 0 30px rgba(92,225,230,.15))}
-.fly-tap{font-family:'JetBrains Mono',monospace;font-size:9px;color:rgba(92,225,230,.3);letter-spacing:3px;text-transform:uppercase;margin-top:2px;animation:breathe 2s infinite}
-.fly-logo-wrap.burst{animation:none !important;transform:scale(0) rotate(20deg) !important;opacity:0 !important}
+.fly-icon{display:flex;flex-direction:column;align-items:center;gap:4px;margin:10px 0;cursor:pointer;opacity:0;transition:transform .3s,opacity .3s}
+.fly-icon img{width:50px;height:auto;filter:drop-shadow(0 0 15px rgba(92,225,230,.15));transition:transform .15s}
+.fly-icon:hover img{transform:scale(1.1)}
+.fly-icon:active img{transform:scale(.8)}
+.fly-icon span{font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(92,225,230,.25);letter-spacing:2px;text-transform:uppercase}
+.fly-icon.anim{animation:iconDown 2.5s ease-out both,iconBob 3.5s ease-in-out 3s infinite}
+.fly-icon.fly-bot.anim{animation:iconUp 2.5s ease-out .4s both,iconBob 3.5s ease-in-out 3.4s infinite}
+.fly-icon.pop{animation:none !important;transform:scale(0) !important;opacity:0 !important;transition:all .4s}
 
-/* GLIQUID POPUP */
-.gliq{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);font-family:'Inter',sans-serif;font-size:clamp(36px,8vw,62px);font-weight:900;letter-spacing:6px;background:linear-gradient(135deg,#5ce1e6,#38b6ff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;z-index:350;pointer-events:none;opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);text-shadow:none}
+/* GLIQUID POPUP — small */
+.gliq{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);font-family:'Inter',sans-serif;font-size:clamp(16px,4vw,24px);font-weight:900;letter-spacing:4px;background:linear-gradient(135deg,#5ce1e6,#38b6ff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;z-index:350;pointer-events:none;opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1)}
 .gliq.show{transform:translate(-50%,-50%) scale(1);opacity:1}
 
 /* LOGO */
@@ -164,9 +162,9 @@ canvas{display:block;position:fixed;top:0;left:0;z-index:1}
 
 <!-- INTRO -->
 <div class="scr sc-top off" id="sI">
-  <div class="fly-logo-wrap fly-from-top" id="lgT">
-    <img class="fly-logo-img" src="https://raw.githubusercontent.com/hossein6191/liquid/main/Full-Logo-Offwhite-4K.png" alt="" draggable="false" onerror="this.parentElement.style.display='none'">
-    <div class="fly-tap">tap me</div>
+  <div class="fly-icon" id="lgT">
+    <img src="https://raw.githubusercontent.com/hossein6191/liquid/main/Icon-Offwhite-4K.png" alt="" draggable="false" onerror="this.parentElement.style.display='none'">
+    <span>tap me</span>
   </div>
   <img class="logo-img" src="https://raw.githubusercontent.com/hossein6191/liquid/main/Full-Logo-Offwhite-4K.png" alt="Liquid" draggable="false" onerror="this.outerHTML='<div style=\'font-size:clamp(28px,6vw,44px);font-weight:900;margin:8px 0\'><span style=\'color:#5ce1e6\'>Liquid</span> Runner</div>'">
   <div class="tag">Navigate the Charts</div>
@@ -174,13 +172,15 @@ canvas{display:block;position:fixed;top:0;left:0;z-index:1}
   <div class="bx"><h3>⚡ Drops & Multiplier</h3><p>Each <b>💧 drop</b> = <b>+0.15x score multiplier!</b><br>More drops = higher multiplier = way more $$$.<br>Every <b>5 drops</b> = <b>6 sec Surge</b> (invincibility).<br>Every <b>10 drops</b> = a <b>fact about Liquid</b>.</p></div>
   <div class="bx"><h3>📈 Difficulty</h3><p>Each coin = different speed by <b>volatility</b>.<br>🟢 Easy &nbsp; 🟡 Medium &nbsp; 🔴 Hard<br>Ramps: <b>Chill → Medium → Hard → Insane</b></p>
   <p class="w">⚠ Fan-made. Not financial advice. Prices via CoinGecko.</p></div>
-  <button class="btn btn-go" id="bGo" style="margin-top:8px">CHOOSE COIN →</button>
-  <button class="btn btn-lb" id="bLB">🏆 LEADERBOARD</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:10px">
+    <button class="btn btn-go" id="bGo">CHOOSE COIN →</button>
+    <button class="btn btn-lb" id="bLB">🏆 LEADERBOARD</button>
+  </div>
   <div class="lbPanel" id="lbPI"><div class="lb" id="lbI"></div></div>
   <div class="ft">Made by <a href="https://x.com/HossseinRezaei" target="_blank">Hellish</a> · <a href="https://app.tryliquid.xyz" target="_blank">app.tryliquid.xyz</a></div>
-  <div class="fly-logo-wrap fly-from-bot" id="lgB">
-    <img class="fly-logo-img" src="https://raw.githubusercontent.com/hossein6191/liquid/main/Full-Logo-Offwhite-4K.png" alt="" draggable="false" onerror="this.parentElement.style.display='none'">
-    <div class="fly-tap">tap me</div>
+  <div class="fly-icon fly-bot" id="lgB">
+    <img src="https://raw.githubusercontent.com/hossein6191/liquid/main/Icon-Offwhite-4K.png" alt="" draggable="false" onerror="this.parentElement.style.display='none'">
+    <span>tap me</span>
   </div>
   <div class="gliq" id="gliqP">Gliquid</div>
 </div>
@@ -190,8 +190,10 @@ canvas{display:block;position:fixed;top:0;left:0;z-index:1}
   <div style="font-family:'Space Grotesk',sans-serif;font-size:clamp(20px,4.5vw,30px);font-weight:700;margin:10px 0 2px"><span style="color:#5ce1e6">Select</span> Coin</div>
   <div class="tag" style="font-size:9px;margin-bottom:12px">VOLATILITY = DIFFICULTY</div>
   <div id="cA"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.15)">Fetching prices…</div></div>
-  <button class="btn btn-go" id="bSt" disabled style="margin-top:8px">SELECT A COIN</button>
-  <button class="btn btn-bk" id="bBI">← Back</button>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:8px">
+    <button class="btn btn-go" id="bSt" disabled>SELECT A COIN</button>
+    <button class="btn btn-bk" id="bBI">← Back</button>
+  </div>
 </div>
 
 <!-- DEAD -->
@@ -229,7 +231,7 @@ document.addEventListener('click',function(e){var b=e.target.closest('.btn');if(
       setTimeout(function(){bst.style.display='block'},400);
       setTimeout(function(){document.getElementById('sBubble').classList.add('off');document.getElementById('sI').classList.remove('off');
         // Trigger logo slide-in animations
-        setTimeout(function(){var t=document.getElementById('lgT'),b=document.getElementById('lgB');if(t)t.classList.add('animate');if(b)b.classList.add('animate')},200);
+        setTimeout(function(){var t=document.getElementById('lgT'),b=document.getElementById('lgB');if(t)t.classList.add('anim');if(b)b.classList.add('anim')},200);
       },2000)}
   });
   function sp(cx,cy,n,c){for(var i=0;i<n;i++){var a=Math.random()*Math.PI*2,s=2+Math.random()*7;pts.push({x:cx,y:cy,vx:Math.cos(a)*s,vy:Math.sin(a)*s-1,l:30+Math.random()*20,ml:50,s:2+Math.random()*5,c:c})}}
@@ -344,29 +346,26 @@ Game.prototype.inp=function(){
   document.getElementById('bSt').onclick=function(e){e.stopPropagation();iA();s.begin()};
   document.getElementById('bBC').onclick=function(e){e.stopPropagation();s.st=0;s.show('sC')};
   document.getElementById('bLB').onclick=function(e){e.stopPropagation();var p=document.getElementById('lbPI');p.classList.toggle('show');if(p.classList.contains('show'))fLB(function(){rLB('lbI',localStorage.getItem('lr_nm'))})};
-  // Logo click → burst + Gliquid
+  // Icon click → pop + small Gliquid
   ['lgT','lgB'].forEach(function(id){var el=document.getElementById(id);if(!el)return;el.addEventListener('click',function(e){
     e.stopPropagation();
-    // Get center position for particles
-    var r=el.getBoundingClientRect();var cx=r.left+r.width/2,cy=r.top+r.height/2;
-    // Burst the logo
-    el.classList.add('burst');
-    // Create particles at logo position
+    el.classList.add('pop');
+    // Particles
+    var r=el.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
     var cv=document.createElement('canvas');cv.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:250';cv.width=innerWidth;cv.height=innerHeight;document.body.appendChild(cv);
     var ctx=cv.getContext('2d'),pp=[];
-    for(var i=0;i<40;i++){var a=Math.random()*Math.PI*2,sp=3+Math.random()*8;pp.push({x:cx,y:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-2,l:30+Math.random()*25,ml:55,s:3+Math.random()*5,c:['#5ce1e6','#38b6ff','#fbbf24','#a78bfa'][i%4]})}
-    function anim(){ctx.clearRect(0,0,cv.width,cv.height);var alive=false;for(var i=0;i<pp.length;i++){var p=pp[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.1;p.l--;if(p.l<=0)continue;alive=true;ctx.globalAlpha=(p.l/p.ml)*.8;ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.s*(p.l/p.ml),0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;if(alive)requestAnimationFrame(anim);else cv.remove()}anim();
-    // Show Gliquid text
+    for(var i=0;i<20;i++){var a=Math.random()*Math.PI*2,sp=2+Math.random()*5;pp.push({x:cx,y:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1,l:25+Math.random()*15,ml:40,s:2+Math.random()*3,c:['#5ce1e6','#38b6ff','#fbbf24'][i%3]})}
+    function anim(){ctx.clearRect(0,0,cv.width,cv.height);var alive=false;for(var i=0;i<pp.length;i++){var p=pp[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.08;p.l--;if(p.l<=0)continue;alive=true;ctx.globalAlpha=(p.l/p.ml)*.7;ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.s*(p.l/p.ml),0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;if(alive)requestAnimationFrame(anim);else cv.remove()}anim();
+    // Show small Gliquid
     var gp=document.getElementById('gliqP');gp.classList.add('show');
-    setTimeout(function(){gp.classList.remove('show')},1800);
-    // Restore logo after delay
-    setTimeout(function(){el.classList.remove('burst')},3000);
+    setTimeout(function(){gp.classList.remove('show')},1400);
+    setTimeout(function(){el.classList.remove('pop')},2500);
   })});
 };
 Game.prototype.show=function(id){
   ['sBubble','sI','sC','sD'].forEach(function(x){document.getElementById(x).classList.toggle('off',x!==id)});
   // Trigger logo animations when intro is shown
-  if(id==='sI'){setTimeout(function(){var t=document.getElementById('lgT'),b=document.getElementById('lgB');if(t)t.classList.add('animate');if(b)b.classList.add('animate')},100)}
+  if(id==='sI'){setTimeout(function(){var t=document.getElementById('lgT'),b=document.getElementById('lgB');if(t)t.classList.add('anim');if(b)b.classList.add('anim')},100)}
 };
 Game.prototype.hideAll=function(){['sBubble','sI','sC','sD'].forEach(function(x){document.getElementById(x).classList.add('off')})};
 Game.prototype.flap=function(){this.py.vy=this.FL;bp(450+Math.random()*250,.04);var cl=sel?sel.clr:'#5ce1e6';for(var i=0;i<4;i++)this.pt.push(new Pt(this.py.x-6,this.py.y+Math.random()*8-4,cl,-Math.random()*1.2-.2,(Math.random()-.5)*1.8,12+Math.random()*6))};
